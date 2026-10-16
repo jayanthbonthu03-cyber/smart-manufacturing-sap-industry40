@@ -47,3 +47,22 @@ for machine, downtime in machine_downtime.items():
 worst_machine = max(machine_downtime, key=machine_downtime.get)
 
 print(f"\nHighest downtime: {worst_machine}")
+# SUSTAINABLE MANUFACTURING KPI
+# -----------------------------
+
+total_produced = 0
+total_energy = 0
+
+with open("data/production_data.csv", "r", newline="", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+
+    for row in reader:
+        total_produced += int(row["Produced"])
+        total_energy += float(row["Energy_kWh"])
+
+energy_per_unit = total_energy / total_produced if total_produced else 0
+
+print("\nSUSTAINABILITY REPORT")
+print("---------------------")
+print(f"Total energy consumption: {total_energy:.0f} kWh")
+print(f"Energy consumption per unit: {energy_per_unit:.3f} kWh/unit")
