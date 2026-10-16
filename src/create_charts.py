@@ -1,33 +1,32 @@
-import csv
-from collections import defaultdict
-from pathlib import Path
-from xml.sax.saxutils import escape
+# --------------------------------------------------
+# PRODUCT QUALITY ANALYSIS
+# --------------------------------------------------
 
-DATA_FILE = Path("data/production_data.csv")
-OUTPUT_DIR = Path("charts")
-OUTPUT_FILE = OUTPUT_DIR / "machine_downtime.svg"
-
-downtime_by_machine = defaultdict(int)
+defective_by_machine = defaultdict(int)
+produced_by_machine = defaultdict(int)
 
 with DATA_FILE.open("r", newline="", encoding="utf-8") as file:
     reader = csv.DictReader(file)
 
     for row in reader:
         machine = row["Machine"]
-        downtime = int(row["Downtime_min"])
-        downtime_by_machine[machine] += downtime
+        produced = int(row["Produced"])
+        defective = int(row["Defective"])
 
-OUTPUT_DIR.mkdir(exist_ok=True)
+        produced_by_machine[machine] += produced
+        defective_by_machine[machine] += defective
+
+quality_chart = OUTPUT_DIR / "product_quality.svg"
 
 chart_width = 800
 chart_height = 450
 left_margin = 160
-right_margin = 60
-top_margin = 80
+right_margin = 100
+top_margin = 100
 bar_height = 55
 bar_gap = 55
 
-max_downtime = max(downtime_by_machine.values(), default=1)
+max_defects = max(defective_by_machine.values(), default=1)
 available_width = chart_width - left_margin - right_margin
 
 svg_parts = [
@@ -37,17 +36,16 @@ svg_parts = [
     '<rect width="100%" height="100%" fill="white"/>',
     '<text x="400" y="40" text-anchor="middle" '
     'font-size="24" font-family="Arial" font-weight="bold">'
-    'Machine Downtime Analysis</text>',
+    'Product Quality Analysis</text>',
     '<text x="400" y="65" text-anchor="middle" '
     'font-size="14" font-family="Arial" fill="#555">'
-    'Simulated manufacturing data</text>',
+    'Defective products by machine</text>',
 ]
 
-for index, (machine, downtime) in enumerate(
-    sorted(downtime_by_machine.items())
-):
+for index, machine in enumerate(sorted(defective_by_machine)):
+    defects = defective_by_machine[machine]
     y = top_margin + index * (bar_height + bar_gap)
-    bar_width = available_width * downtime / max_downtime
+    bar_width = available_width * defects / max_defects
 
     svg_parts.extend([
         f'<text x="{left_margin - 20}" y="{y + 35}" '
@@ -57,22 +55,27 @@ for index, (machine, downtime) in enumerate(
         f'height="{bar_height}" fill="#2878B5" rx="5"/>',
         f'<text x="{left_margin + bar_width + 10:.1f}" '
         f'y="{y + 35}" font-size="17" font-family="Arial">'
-        f'{downtime} min</text>',
+        f'{defects} defects</text>',
     ])
 
 svg_parts.extend([
     '<text x="400" y="420" text-anchor="middle" '
     'font-size="14" font-family="Arial" fill="#555">'
-    'Total downtime measured in minutes</text>',
+    'Number of defective products</text>',
     '</svg>',
 ])
 
-OUTPUT_FILE.write_text("\n".join(svg_parts), encoding="utf-8")
+quality_chart.write_text("\n".join(svg_parts), encoding="utf-8")
 
-print("MACHINE DOWNTIME CHART")
+print("\nPRODUCT QUALITY REPORT")
 print("----------------------")
 
-for machine, downtime in sorted(downtime_by_machine.items()):
-    print(f"{machine}: {downtime} minutes")
+for machine in sorted(defective_by_machine):
+    produced = produced_by_machine[machine]
+    defects = defective_by_machine[machine]
+    defect_rate = defects / produced * 100 if produced else 0
 
-print(f"\nChart saved to: {OUTPUT_FILE}")
+    print(f"{machine}: {defects} defective out of {produced} produced")
+    print(f"  Defect rate: {defect_rate:.2f}%")
+
+print(f"\nQuality chart saved to: {quality_chart}")
