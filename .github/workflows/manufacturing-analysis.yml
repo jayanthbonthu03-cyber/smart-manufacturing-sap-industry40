@@ -7,12 +7,14 @@ on:
       - 'src/**'
       - 'charts/**'
       - '.github/workflows/manufacturing-analysis.yml'
+
   pull_request:
     paths:
       - 'data/**'
       - 'src/**'
       - 'charts/**'
       - '.github/workflows/manufacturing-analysis.yml'
+
   workflow_dispatch:
 
 permissions:
@@ -43,12 +45,11 @@ jobs:
           name: manufacturing-charts
           path: charts/*.svg
 
-      - name: Commit generated chart
+      - name: Commit generated charts
         if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-         git add charts/machine_downtime.svg charts/product_quality.svg
-          git diff --cached --quiet || git commit -m "Update generated manufacturing chart"
+          git add charts/machine_downtime.svg charts/product_quality.svg
+          git diff --cached --quiet || git commit -m "Update generated manufacturing charts"
           git push
-    
