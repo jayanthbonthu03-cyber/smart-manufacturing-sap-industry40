@@ -63,3 +63,14 @@ GitHub Actions executes the Python analysis and generates a machine downtime cha
 ## Disclaimer
 
 All data is simulated for educational purposes. This independent project is not affiliated with or endorsed by SAP or any manufacturing company.
+## Product Quality Analysis
+
+![Product Quality Analysis](charts/product_quality.svg)
+
+This chart compares the number of defective products recorded for each machine using simulated manufacturing data.
+
+### Key Findings
+
+- **Machine M01:** 65 defective products out of 2,480 produced (2.62% defect rate).
+- **Machine M02:** 35 defective products out of 2,200 produced (1.59% defect rate).
+- **Improvement opportunity:** Investigate the production process and quality-control settings of M01 to identify potential causes of its higher defect rate.
