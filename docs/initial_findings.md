@@ -52,16 +52,41 @@ Measures the energy consumed during manufacturing.
 
 ## 5. Initial Findings
 
-The Python analysis will calculate the following indicators:
+The Python analysis was executed successfully using GitHub Actions.
 
-- Total production
-- Total defective products
-- Defect rate
-- Total machine downtime
-- Total energy consumption
-- Downtime by machine
+### Key Performance Indicators
 
-The results will be documented after the analysis has been executed and verified.
+| KPI | Result |
+|---|---:|
+| Total production | 4,680 units |
+| Total defective products | 100 units |
+| Defect rate | 2.14% |
+| Total machine downtime | 225 minutes |
+| Total energy consumption | 2,006 kWh |
+
+### Downtime by Machine
+
+| Machine | Total downtime |
+|---|---:|
+| M01 | 140 minutes |
+| M02 | 85 minutes |
+
+### Key Observations
+
+- Total production across the five-day period was 4,680 units.
+- The overall defect rate was approximately 2.14%.
+- Machine M01 recorded the highest downtime at 140 minutes.
+- Machine M02 recorded 85 minutes of downtime.
+- Total energy consumption was 2,006 kWh.
+
+### Initial Recommendations
+
+- Investigate the causes of downtime on machine M01.
+- Monitor defective products to identify potential quality issues.
+- Compare energy consumption with production output.
+- Collect additional data to identify trends over time.
+
+These findings are based on simulated data and should not be treated as actual factory performance.
 
 ## 6. Initial Recommendations
 
