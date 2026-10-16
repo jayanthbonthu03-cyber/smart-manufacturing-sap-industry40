@@ -28,3 +28,12 @@ jobs:
 
       - name: Run manufacturing analysis
         run: python src/production_analysis.py
+
+      - name: Generate manufacturing charts
+        run: python src/create_charts.py
+
+      - name: Upload manufacturing charts
+        uses: actions/upload-artifact@v4
+        with:
+          name: manufacturing-charts
+          path: charts/
