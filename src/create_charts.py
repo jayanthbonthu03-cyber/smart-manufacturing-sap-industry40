@@ -5,7 +5,7 @@ from xml.sax.saxutils import escape
 
 DATA_FILE = Path("data/production_data.csv")
 OUTPUT_DIR = Path("charts")
-OUTPUT_FILE = OUTPUT_DIR / "machine_downtime.svg"pe
+OUTPUT_FILE = OUTPUT_DIR / "machine_downtime.svg"
 # --------------------------------------------------
 # PRODUCT QUALITY ANALYSIS
 # --------------------------------------------------
