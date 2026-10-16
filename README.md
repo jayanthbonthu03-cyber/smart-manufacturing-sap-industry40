@@ -34,7 +34,11 @@ The project focuses on production output, product quality, machine downtime, and
 | **Total** | **225 minutes** |
 
 Machine M01 recorded the highest downtime in the simulated dataset.
+### Machine Downtime Visualization
 
+![Machine downtime comparison](charts/machine_downtime.svg)
+
+The chart compares the recorded downtime of machines M01 and M02 using simulated manufacturing data.
 ## Project Structure
 
 - `data/production_data.csv` — simulated manufacturing dataset
